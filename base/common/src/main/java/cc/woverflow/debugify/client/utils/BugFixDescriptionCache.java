@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -23,12 +24,14 @@ public class BugFixDescriptionCache {
     private final Map<String, String> descriptionHolder = new HashMap<>();
     private final String url = "https://bugs.mojang.com/rest/api/2/issue/%s";
 
+
+
     private void cacheDescriptions() {
         Debugify.logger.info("Caching bug descriptions");
 
         HttpClient client = HttpClient.newHttpClient();
 
-        for (String id : Debugify.config.getBugFixes().keySet()) {
+        for (String id : Debugify.config.getBugFixesIgnoringCategories().keySet()) {
             try {
                 HttpRequest request = HttpRequest.newBuilder(new URI(String.format(url, id)))
                         .build();

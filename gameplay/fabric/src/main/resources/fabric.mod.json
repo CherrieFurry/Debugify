@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "debugify-gameplay",
+  "version": "${version}",
+  "name": "Debugify (Gameplay)",
+  "description": "Fixes Minecraft bugs relating to gameplay found on the bug tracker",
+  "authors": [
+    "isXander",
+    "W-OVERFLOW",
+    "Contributors"
+  ],
+  "contact": {
+    "homepage": "https://woverflow.cc",
+    "issues": "https://github.com/W-OVERFLOW/Debugify/issues",
+    "sources": "https://github.com/W-OVERFLOW/Debugify"
+  },
+  "license": "LGPLv3",
+  "environment": "*",
+  "icon": "debugify.png",
+  "entrypoints": {
+
+  },
+  "mixins": [
+    "debugify-gameplay-common.mixins.json"
+  ],
+  "depends": {
+    "debugify": "${version}",
+    "fabricloader": ">=0.13.0",
+    "minecraft": "~1.18.2",
+    "java": ">=17"
+  },
+  "recommends": {
+    "cloth-config2": "6.x.x",
+    "modmenu": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "Patched Bugs": "https://github.com/W-OVERFLOW/Debugify/blob/1.18/PATCHED.md#unpatched-in-vanilla"
+      }
+    }
+  }
+}

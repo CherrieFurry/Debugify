@@ -1,7 +1,6 @@
 package cc.woverflow.debugify.config;
 
 import cc.woverflow.debugify.Debugify;
-import cc.woverflow.debugify.utils.ExpectUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -10,27 +9,29 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.AbstractMap;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DebugifyConfig {
-    private final Path configPath = ExpectUtils.getConfigPath().resolve("debugify.json");
+    private final Path configPath = Debugify.configFolder.resolve("debugify.json");
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     private final Map<String, Boolean> jsonBugFixes = new HashMap<>();
 
-    private final Map<String, Boolean> bugFixes = new HashMap<>();
+    private final Map<String, Map<String, Boolean>> bugFixCategories = new LinkedHashMap<>();
     public boolean defaultDisabled = false;
     public boolean optOutUpdater = false;
 
     private boolean preloaded = false;
 
-    public void registerBugFix(String id) {
-        if (bugFixes.containsKey(id))
+    public void registerBugFix(String id, String category, boolean defaultState) {
+        if (bugFixCategories.containsKey(id))
             return;
 
-        boolean enabled = jsonBugFixes.getOrDefault(id, !defaultDisabled);
-        bugFixes.put(id, enabled);
+        boolean enabled = jsonBugFixes.getOrDefault(id, defaultState && !defaultDisabled);
+        bugFixCategories.putIfAbsent(category, new LinkedHashMap<>());
+        bugFixCategories.get(category).put(id, enabled);
     }
 
     public void preload() {
@@ -74,7 +75,7 @@ public class DebugifyConfig {
             Files.deleteIfExists(configPath);
 
             JsonObject json = new JsonObject();
-            bugFixes.forEach(json::addProperty);
+            bugFixCategories.forEach((category, bugFixes) -> bugFixes.forEach(json::addProperty));
             json.addProperty("opt_out_updater", optOutUpdater);
             if (defaultDisabled) {
                 json.addProperty("default_disabled", true);
@@ -88,14 +89,27 @@ public class DebugifyConfig {
     }
 
     public boolean isBugFixEnabled(String bug) {
-        return bugFixes.getOrDefault(bug, false);
+        return getBugFixesIgnoringCategories().getOrDefault(bug, false);
     }
 
-    public Map<String, Boolean> getBugFixes() {
-        return bugFixes;
+    public Map<String, Map<String, Boolean>> getBugFixCategories() {
+        return bugFixCategories;
+    }
+    public Map<String, Boolean> getBugFixesIgnoringCategories() {
+        Map<String, Boolean> merged = new LinkedHashMap<>();
+        bugFixCategories.forEach((category, bugFixes) -> merged.putAll(bugFixes));
+        return merged;
+    }
+
+    public void setBugFixEnabled(String bug, boolean enabled) {
+        bugFixCategories.forEach((category, bugFixes) -> bugFixes.forEach((id, currentState) -> {
+            if (id.equals(bug)) {
+                bugFixCategories.get(category).replace(id, enabled);
+            }
+        }));
     }
 
     public boolean doesJsonMatchConfig() {
-        return jsonBugFixes.equals(bugFixes);
+        return jsonBugFixes.equals(getBugFixesIgnoringCategories());
     }
 }

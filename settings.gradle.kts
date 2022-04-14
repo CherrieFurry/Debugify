@@ -11,6 +11,5 @@ pluginManagement {
 
 rootProject.name = "Debugify"
 
-include("common")
-include("fabric")
-include("forge")
+include(":base:common", ":base:fabric", ":base:forge")
+include(":gameplay:common", ":gameplay:fabric", ":gameplay:forge")

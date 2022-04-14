@@ -12,7 +12,7 @@ architectury {
 }
 
 loom {
-    accessWidenerPath.set(project(":common").loom.accessWidenerPath)
+    accessWidenerPath.set(project(":base:common").loom.accessWidenerPath)
 
     forge.apply {
         mixinConfig("debugify-common.mixins.json")
@@ -36,8 +36,8 @@ dependencies {
 
     forge("net.minecraftforge:forge:$minecraftVersion-$forgeVersion")
 
-    common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
-    shadowCommon(project(path = ":common", configuration = "transformProductionForge")) { isTransitive = false }
+    common(project(path = ":base:common", configuration = "namedElements")) { isTransitive = false }
+    shadowCommon(project(path = ":base:common", configuration = "transformProductionForge")) { isTransitive = false }
 
 
     "com.github.zafarkhaja:java-semver:0.9.+".let {
@@ -107,6 +107,7 @@ modrinth {
     versionNumber.set("${project.version}-${project.name}")
     versionType.set("release")
     uploadFile.set(tasks.remapJar.get())
+    additionalFiles.add(project(":gameplay:forge").tasks["remapJar"])
     gameVersions.set(listOf(minecraftVersion))
     loaders.set(listOf(project.name))
     changelog.set(extra["changelog"].toString())
@@ -121,6 +122,8 @@ if (hasProperty("curseforge.token")) {
             mainArtifact(tasks.remapJar.get(), closureOf<com.matthewprenger.cursegradle.CurseArtifact> {
                 displayName = "[${project.name.capitalize()} $minecraftVersion] ${project.version}"
             })
+
+            addArtifact(project(":gameplay:forge").tasks["remapJar"])
 
             id = "596224"
             releaseType = "release"

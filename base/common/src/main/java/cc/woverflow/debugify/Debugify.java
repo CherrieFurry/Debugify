@@ -2,15 +2,19 @@ package cc.woverflow.debugify;
 
 import cc.woverflow.debugify.api.updater.UpdateChecker;
 import cc.woverflow.debugify.config.DebugifyConfig;
+import cc.woverflow.debugify.utils.ExpectUtils;
 import com.github.zafarkhaja.semver.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Path;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class Debugify {
     public static Logger logger = LoggerFactory.getLogger("Debugify");
     public static Version version = Version.valueOf("@VERSION@");
+    public static Path configFolder = ExpectUtils.getConfigPath().resolve("debugify");
     public static DebugifyConfig config = new DebugifyConfig();
     public static boolean configWasDirty = false;
 
@@ -43,6 +47,6 @@ public class Debugify {
         });
 
         logger.info("Successfully Debugify'd your game!");
-        logger.info("Proudly fixes {} bugs!", config.getBugFixes().size());
+        logger.info("Proudly fixes {} bugs!", config.getBugFixCategories().values().stream().map(Map::size).reduce(0, Integer::sum));
     }
 }

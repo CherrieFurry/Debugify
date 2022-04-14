@@ -15,17 +15,20 @@ public class ConfigGuiHelper {
                 .setSavingRunnable(config::save)
                 .setParentScreen(parent);
 
-        ConfigCategory fixesCategory = builder.getOrCreateCategory(new LiteralText("Fixes"));
-        config.getBugFixes().forEach((bug, enabled) -> {
-            AbstractConfigListEntry<?> entry = builder.entryBuilder()
-                    .startBooleanToggle(new LiteralText(bug), enabled)
-                    .setTooltip(new LiteralText(DebugifyClient.bugFixDescriptionCache.get(bug)))
-                    .setSaveConsumer((toggled) -> config.getBugFixes().replace(bug, toggled))
-                    .setDefaultValue(true)
-                    .requireRestart()
-                    .build();
+        config.getBugFixCategories().forEach((categoryName, fixes) -> {
+            ConfigCategory category = builder.getOrCreateCategory(new LiteralText(categoryName));
 
-            fixesCategory.addEntry(entry);
+            fixes.forEach((bug, enabled) -> {
+                AbstractConfigListEntry<?> entry = builder.entryBuilder()
+                        .startBooleanToggle(new LiteralText(bug), enabled)
+                        .setTooltip(new LiteralText(DebugifyClient.bugFixDescriptionCache.get(bug)))
+                        .setSaveConsumer((toggled) -> config.setBugFixEnabled(bug, toggled))
+                        .setDefaultValue(true)
+                        .requireRestart()
+                        .build();
+
+                category.addEntry(entry);
+            });
         });
 
         ConfigCategory miscCategory = builder.getOrCreateCategory(new LiteralText("Misc"));

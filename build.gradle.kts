@@ -125,7 +125,10 @@ tasks {
         tagName("${project.version}")
         targetCommitish("1.18")
         body(extra["changelog"].toString())
-        releaseAssets(project(":fabric").tasks["remapJar"].outputs.files, project(":forge").tasks["remapJar"].outputs.files)
+        releaseAssets(
+            project(":base:fabric").tasks["remapJar"].outputs.files,
+            project(":base:forge").tasks["remapJar"].outputs.files,
+        )
     }
 
     register("publishDebugify") {

@@ -25,7 +25,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
         String bugPackage = split[split.length - 2];
         if (bugPackage.startsWith("mc")) {
             String bug = "MC-" + bugPackage.substring(2);
-            Debugify.config.registerBugFix(bug);
+            Debugify.config.registerBugFix(bug, getCategory(), getDefault());
             return Debugify.config.isBugFixEnabled(bug);
         }
         return true;
@@ -42,4 +42,12 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {}
+
+    protected String getCategory() {
+        return "Base";
+    }
+
+    protected boolean getDefault() {
+        return true;
+    }
 }

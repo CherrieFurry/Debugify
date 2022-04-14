@@ -12,7 +12,7 @@ architectury {
 }
 
 loom {
-    accessWidenerPath.set(project(":common").loom.accessWidenerPath)
+    accessWidenerPath.set(project(":base:common").loom.accessWidenerPath)
 }
 
 val common by configurations.creating {
@@ -28,8 +28,8 @@ dependencies {
 
     modImplementation("net.fabricmc:fabric-loader:$fabricLoaderVersion")
 
-    common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
-    shadowCommon(project(path = ":common", configuration = "transformProductionFabric")) { isTransitive = false }
+    common(project(path = ":base:common", configuration = "namedElements")) { isTransitive = false }
+    shadowCommon(project(path = ":base:common", configuration = "transformProductionFabric")) { isTransitive = false }
 
     implementation("com.github.zafarkhaja:java-semver:0.9.+")
     shadowCommon("com.github.zafarkhaja:java-semver:0.9.+")
@@ -97,6 +97,7 @@ modrinth {
     versionNumber.set("${project.version}-${project.name}")
     versionType.set("release")
     uploadFile.set(tasks.remapJar.get())
+    additionalFiles.add(project(":gameplay:fabric").tasks["remapJar"])
     gameVersions.set(listOf(minecraftVersion))
     loaders.set(listOf(project.name))
     changelog.set(extra["changelog"].toString())
@@ -112,6 +113,8 @@ if (hasProperty("curseforge.token")) {
             mainArtifact(tasks.remapJar.get(), closureOf<com.matthewprenger.cursegradle.CurseArtifact> {
                 displayName = "[${project.name.capitalize()} $minecraftVersion] ${project.version}"
             })
+
+            addArtifact(project(":gameplay:fabric").tasks["remapJar"])
 
             id = "596224"
             releaseType = "beta"
