@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "cc.woverflow.debugify.fabric.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "injectors": {
+    "defaultRequire": 0
+  },
+  "plugin": "cc.woverflow.debugify.utils.MixinPlugin",
+  "client": [
+    "client.mc176559.ClientPlayerInteractionManagerMixin",
+    "client.mc235035.ClientPlayNetworkHandlerMixin"
+  ],
+  "mixins": [
+    "server.mc7569.RconCommandOutputMixin"
+  ],
+  "refmap": "debugify-fabric-fabric-refmap.json"
+}

@@ -1,0 +1,30 @@
+{
+  "mappings": {
+    "cc/woverflow/debugify/fabric/mixins/server/mc7569/RconCommandOutputMixin": {
+      "sendSystemMessage": "Lnet/minecraft/class_3350;method_9203(Lnet/minecraft/class_2561;Ljava/util/UUID;)V"
+    },
+    "cc/woverflow/debugify/fabric/mixins/client/mc235035/ClientPlayNetworkHandlerMixin": {
+      "onGameMessage": "Lnet/minecraft/class_634;method_11121(Lnet/minecraft/class_2635;)V",
+      "Lnet/minecraft/client/gui/hud/InGameHud;addChatMessage(Lnet/minecraft/network/MessageType;Lnet/minecraft/text/Text;Ljava/util/UUID;)V": "Lnet/minecraft/class_329;method_1755(Lnet/minecraft/class_2556;Lnet/minecraft/class_2561;Ljava/util/UUID;)V"
+    },
+    "cc/woverflow/debugify/fabric/mixins/client/mc176559/ClientPlayerInteractionManagerMixin": {
+      "isCurrentlyBreaking": "Lnet/minecraft/class_636;method_2922(Lnet/minecraft/class_2338;)Z",
+      "Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z": "Lnet/minecraft/class_1799;method_31574(Lnet/minecraft/class_1792;)Z"
+    }
+  },
+  "data": {
+    "named:intermediary": {
+      "cc/woverflow/debugify/fabric/mixins/server/mc7569/RconCommandOutputMixin": {
+        "sendSystemMessage": "Lnet/minecraft/class_3350;method_9203(Lnet/minecraft/class_2561;Ljava/util/UUID;)V"
+      },
+      "cc/woverflow/debugify/fabric/mixins/client/mc235035/ClientPlayNetworkHandlerMixin": {
+        "onGameMessage": "Lnet/minecraft/class_634;method_11121(Lnet/minecraft/class_2635;)V",
+        "Lnet/minecraft/client/gui/hud/InGameHud;addChatMessage(Lnet/minecraft/network/MessageType;Lnet/minecraft/text/Text;Ljava/util/UUID;)V": "Lnet/minecraft/class_329;method_1755(Lnet/minecraft/class_2556;Lnet/minecraft/class_2561;Ljava/util/UUID;)V"
+      },
+      "cc/woverflow/debugify/fabric/mixins/client/mc176559/ClientPlayerInteractionManagerMixin": {
+        "isCurrentlyBreaking": "Lnet/minecraft/class_636;method_2922(Lnet/minecraft/class_2338;)Z",
+        "Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z": "Lnet/minecraft/class_1799;method_31574(Lnet/minecraft/class_1792;)Z"
+      }
+    }
+  }
+}

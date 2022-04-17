@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "debugify",
+  "version": "1.7.2",
+  "name": "Debugify",
+  "description": "Fixes Minecraft bugs found on the bug tracker",
+  "authors": [
+    "isXander",
+    "W-OVERFLOW",
+    "Contributors"
+  ],
+  "contact": {
+    "homepage": "https://woverflow.cc",
+    "issues": "https://github.com/W-OVERFLOW/Debugify/issues",
+    "sources": "https://github.com/W-OVERFLOW/Debugify"
+  },
+  "license": "LGPLv3",
+  "environment": "*",
+  "icon": "debugify.png",
+  "entrypoints": {
+    "main": [
+      "cc.woverflow.debugify.Debugify::onInitialize"
+    ],
+    "client": [
+      "cc.woverflow.debugify.client.DebugifyClient::onInitializeClient"
+    ],
+    "modmenu": [
+      "cc.woverflow.debugify.fabric.integrations.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "debugify-common.mixins.json",
+    "debugify.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "\u003e\u003d0.13.0",
+    "minecraft": "~1.18.2",
+    "java": "\u003e\u003d17"
+  },
+  "recommends": {
+    "cloth-config2": "6.x.x",
+    "modmenu": "*"
+  },
+  "breaks": {
+    "forgetmechunk": "*",
+    "fastopenlinksandfolders": "*",
+    "shadowedactionbar": "*",
+    "shiftscrollfix": "*",
+    "chunksavingfix": "*",
+    "forcecloseloadingscreen": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "Patched Bugs": "https://github.com/W-OVERFLOW/Debugify/blob/1.18/PATCHED.md#unpatched-in-vanilla"
+      }
+    }
+  },
+  "accessWidener": "debugify.accesswidener",
+  "jars": [
+    {
+      "file": "META-INF/jars/mixinextras-0.0.7.jar"
+    }
+  ]
+}
